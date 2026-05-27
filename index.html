@@ -3,456 +3,228 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Will You Be My Forever?</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <title>Varanasi Chale?</title>
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #ffe0ec;
-      font-family: 'Lato', sans-serif;
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
-    #love-app {
-      width: 100%;
-      max-width: 520px;
-      min-height: 520px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-      background: radial-gradient(ellipse at 30% 20%, #ffe0ec 0%, #ffd6e7 30%, #ffb3cc 60%, #ff8fab 100%);
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(193, 24, 74, 0.25);
+    body{
+      overflow:hidden;
+      background:black;
+      color:white;
     }
 
-    .star {
-      position: absolute;
-      width: 4px; height: 4px;
-      background: white;
-      border-radius: 50%;
-      opacity: 0;
-      animation: twinkle 3s infinite;
+    .hero{
+      position:relative;
+      width:100%;
+      height:100vh;
+      background:url('https://images.unsplash.com/photo-1561361513-2d000a50f0dc?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
     }
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0; transform: scale(0.5); }
-      50% { opacity: 0.9; transform: scale(1.3); }
+    .overlay{
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.55);
     }
 
-    .screen {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2.5rem 2rem;
-      z-index: 10;
-      animation: fadeIn 0.6s ease;
+    .content{
+      position:relative;
+      z-index:2;
+      animation: fadeIn 2s ease;
     }
 
-    .screen.active { display: flex; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    h1{
+      font-size:5rem;
+      letter-spacing:4px;
+      text-shadow:0 0 20px rgba(255,255,255,0.7);
     }
 
-    .title-text {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.4rem;
-      color: #6b0f3a;
-      margin-bottom: 0.4rem;
-      line-height: 1.2;
+    p{
+      margin-top:20px;
+      font-size:1.5rem;
+      color:#f5d6a1;
     }
 
-    .subtitle-text {
-      font-size: 1rem;
-      color: #a0405a;
-      margin-bottom: 2rem;
-      font-weight: 300;
-      letter-spacing: 0.04em;
+    .buttons{
+      margin-top:40px;
+      position:relative;
+      height:100px;
     }
 
-    .emoji-ring {
-      font-size: 4rem;
-      margin-bottom: 1.2rem;
-      animation: pulse 2s ease-in-out infinite;
+    button{
+      padding:15px 35px;
+      border:none;
+      border-radius:50px;
+      font-size:1.1rem;
+      cursor:pointer;
+      transition:0.3s;
+      position:absolute;
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.12); }
+    #yesBtn{
+      background:#ff9800;
+      color:white;
+      left:35%;
     }
 
-    .btn-group {
-      display: flex;
-      gap: 1rem;
-      margin-top: 0.5rem;
-      flex-wrap: wrap;
-      justify-content: center;
+    #noBtn{
+      background:white;
+      color:#ff9800;
+      right:35%;
     }
 
-    .love-btn {
-      padding: 14px 36px;
-      font-size: 1rem;
-      font-family: 'Lato', sans-serif;
-      font-weight: 400;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      letter-spacing: 0.06em;
-      transition: transform 0.15s, box-shadow 0.15s;
+    #yesBtn:hover{
+      transform:scale(1.1);
     }
 
-    .love-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
-    .love-btn:active { transform: scale(0.97); }
-
-    .yes-btn { background: #c1184a; color: white; }
-    .no-btn { background: white; color: #c1184a; border: 1.5px solid #c1184a; }
-
-    #noBtn { position: absolute; transition: left 0.12s ease, top 0.12s ease; }
-
-    .floating-heart {
-      position: absolute;
-      pointer-events: none;
-      animation: floatUp 3.5s ease-out forwards;
-      z-index: 5;
-      font-size: 1.5rem;
+    .message{
+      position:absolute;
+      inset:0;
+      background:black;
+      display:none;
+      justify-content:center;
+      align-items:center;
+      flex-direction:column;
+      text-align:center;
+      z-index:5;
     }
 
-    @keyframes floatUp {
-      0% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
-      60% { opacity: 0.9; }
-      100% { opacity: 0; transform: translateY(-380px) rotate(20deg) scale(0.6); }
+    .message img{
+      width:350px;
+      border-radius:20px;
+      margin-bottom:25px;
+      box-shadow:0 0 30px rgba(255,255,255,0.3);
     }
 
-    .progress-bar-wrap {
-      width: 220px;
-      height: 6px;
-      background: rgba(255,255,255,0.4);
-      border-radius: 10px;
-      margin: 1.2rem 0 0.4rem;
-      overflow: hidden;
+    .message h2{
+      font-size:3rem;
+      color:#ffcc80;
     }
 
-    .progress-bar {
-      height: 100%;
-      background: #c1184a;
-      border-radius: 10px;
-      width: 0%;
-      transition: width 0.1s linear;
+    .message p{
+      color:white;
+      margin-top:15px;
     }
 
-    .progress-label {
-      font-size: 0.78rem;
-      color: #a0405a;
-      letter-spacing: 0.05em;
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform:translateY(30px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
     }
 
-    .progress-hint {
-      font-size: 0.75rem;
-      color: #c1184a;
-      margin-top: 0.2rem;
-      opacity: 0.7;
-      font-style: italic;
+    .floating{
+      position:absolute;
+      font-size:25px;
+      animation: float 6s linear infinite;
+      opacity:0.8;
     }
 
-    .yes-screen-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
-      color: #6b0f3a;
-      margin-bottom: 0.5rem;
-      animation: bigPop 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    @keyframes bigPop {
-      from { transform: scale(0.3); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    .yes-sub {
-      font-size: 1.1rem;
-      color: #a0405a;
-      font-weight: 300;
-      margin-bottom: 1.8rem;
-    }
-
-    .ring-emoji {
-      font-size: 5rem;
-      display: block;
-      margin-bottom: 1rem;
-      animation: ringPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s both;
-    }
-
-    @keyframes ringPop {
-      from { transform: scale(0) rotate(-30deg); opacity: 0; }
-      to { transform: scale(1) rotate(0deg); opacity: 1; }
-    }
-
-    .share-btn {
-      padding: 10px 28px;
-      background: transparent;
-      border: 1.5px solid #c1184a;
-      border-radius: 50px;
-      color: #c1184a;
-      font-size: 0.9rem;
-      cursor: pointer;
-      font-family: 'Lato', sans-serif;
-      letter-spacing: 0.05em;
-      transition: background 0.2s, color 0.2s;
-      margin-top: 0.5rem;
-    }
-
-    .share-btn:hover { background: #c1184a; color: white; }
-
-    .no-screen-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      color: #6b0f3a;
-      margin-bottom: 0.4rem;
-    }
-
-    .no-sub {
-      font-size: 1rem;
-      color: #a0405a;
-      font-weight: 300;
-      margin-bottom: 1.5rem;
-    }
-
-    .retry-btn {
-      padding: 12px 32px;
-      background: #c1184a;
-      color: white;
-      border: none;
-      border-radius: 50px;
-      font-size: 1rem;
-      cursor: pointer;
-      font-family: 'Lato', sans-serif;
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-
-    .retry-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
-
-    .petal {
-      position: absolute;
-      font-size: 1.2rem;
-      pointer-events: none;
-      animation: petalFall linear forwards;
-      opacity: 0.85;
-    }
-
-    @keyframes petalFall {
-      0% { transform: translateY(-20px) rotate(0deg); opacity: 0.9; }
-      100% { transform: translateY(580px) rotate(360deg); opacity: 0; }
+    @keyframes float{
+      0%{
+        transform:translateY(100vh);
+        opacity:0;
+      }
+      20%{
+        opacity:1;
+      }
+      100%{
+        transform:translateY(-120vh);
+        opacity:0;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<div id="love-app">
-  <div id="stars-container"></div>
+  <div class="hero">
 
-  <!-- Main screen -->
-  <div class="screen active" id="mainScreen">
-    <div class="emoji-ring">💌</div>
-    <div class="title-text">Will You Be My Forever?</div>
-    <div class="subtitle-text">A question from the heart...</div>
+    <div class="overlay"></div>
 
-    <div class="progress-bar-wrap">
-      <div class="progress-bar" id="progressBar"></div>
+    <div class="content">
+      <h1>VARANASI CHALE? ✨</h1>
+      <p>Ghat pe chai, ganga aarti aur tum ❤️</p>
+
+      <div class="buttons">
+        <button id="yesBtn">Chalo ❤️</button>
+        <button id="noBtn">Nahi 😅</button>
+      </div>
     </div>
-    <div class="progress-label" id="progressLabel">Hold YES to fill the heart</div>
-    <div class="progress-hint" id="progressHint">The No button is feeling shy 🙈</div>
 
-    <div class="btn-group" style="margin-top:1.4rem; position:relative; width:100%; min-height:60px;">
-      <button class="love-btn yes-btn" id="yesBtn">Yes ❤️</button>
-      <button class="love-btn no-btn" id="noBtn">No 😅</button>
-    </div>
   </div>
 
-  <!-- Yes screen -->
-  <div class="screen" id="yesScreen">
-    <span class="ring-emoji">💍</span>
-    <div class="yes-screen-title">You Said Yes! 🎉</div>
-    <div class="yes-sub">You are my forever, always and always 💕</div>
-    <button class="share-btn" id="shareBtn">Send this to them ✉️</button>
-    <button class="share-btn" style="margin-top:0.5rem;" onclick="resetApp()">← Start over</button>
+  <div class="message" id="message">
+    <img src="https://images.unsplash.com/photo-1515091943-9d5c0ad475af?q=80&w=1200&auto=format&fit=crop" alt="Varanasi">
+    <h2>Tickets Booked 🎉</h2>
+    <p>Ab hum dono Varanasi jaa rahe hain ❤️</p>
   </div>
 
-  <!-- No screen -->
-  <div class="screen" id="noScreen">
-    <div style="font-size:3.5rem;margin-bottom:1rem;">😢</div>
-    <div class="no-screen-title">You broke my heart!</div>
-    <div class="no-sub">But I still believe in us... give it another shot?</div>
-    <button class="retry-btn" onclick="resetApp()">Try Again 🥺</button>
-  </div>
-</div>
+  <script>
 
-<script>
-  const app = document.getElementById('love-app');
-  const mainScreen = document.getElementById('mainScreen');
-  const yesScreen = document.getElementById('yesScreen');
-  const noScreen = document.getElementById('noScreen');
-  const yesBtn = document.getElementById('yesBtn');
-  const noBtn = document.getElementById('noBtn');
-  const progressBar = document.getElementById('progressBar');
-  const progressLabel = document.getElementById('progressLabel');
-  const progressHint = document.getElementById('progressHint');
-  const shareBtn = document.getElementById('shareBtn');
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const message = document.getElementById("message");
 
-  let progress = 0;
-  let holdInterval = null;
-  let noEscapeCount = 0;
-  let petalInterval = null;
+    // Running No Button
+    noBtn.addEventListener("mouseover", () => {
 
-  // Generate twinkling stars
-  const starsContainer = document.getElementById('stars-container');
-  for (let i = 0; i < 38; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    star.style.left = Math.random() * 100 + '%';
-    star.style.top = Math.random() * 100 + '%';
-    star.style.animationDelay = (Math.random() * 3) + 's';
-    star.style.animationDuration = (2 + Math.random() * 2) + 's';
-    starsContainer.appendChild(star);
-  }
+      const x = Math.random() * (window.innerWidth - 150);
+      const y = Math.random() * (window.innerHeight - 100);
 
-  // Falling petals
-  function startPetals() {
-    petalInterval = setInterval(() => {
-      const petals = ['🌸', '🌺', '🌹', '💮', '🌷'];
-      const p = document.createElement('div');
-      p.className = 'petal';
-      p.textContent = petals[Math.floor(Math.random() * petals.length)];
-      p.style.left = (Math.random() * 90 + 5) + '%';
-      p.style.animationDuration = (4 + Math.random() * 4) + 's';
-      app.appendChild(p);
-      setTimeout(() => p.remove(), 9000);
-    }, 700);
-  }
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
 
-  startPetals();
+    });
 
-  // YES — hold to fill progress bar
-  yesBtn.addEventListener('mousedown', startHold);
-  yesBtn.addEventListener('touchstart', startHold, { passive: true });
-  yesBtn.addEventListener('mouseup', endHold);
-  yesBtn.addEventListener('mouseleave', endHold);
-  yesBtn.addEventListener('touchend', endHold);
+    // Yes Button Click
+    yesBtn.addEventListener("click", () => {
 
-  function startHold() {
-    if (holdInterval) return;
-    holdInterval = setInterval(() => {
-      progress = Math.min(100, progress + 4);
-      progressBar.style.width = progress + '%';
-      const stages = ['Hold to accept... 💓', 'Keep going... 💖', 'Almost there... 💗', 'So close... 💞'];
-      progressLabel.textContent = stages[Math.floor(progress / 26)] || stages[3];
-      progressHint.style.display = 'none';
-      if (progress >= 100) {
-        clearInterval(holdInterval);
-        holdInterval = null;
-        showYes();
+      message.style.display = "flex";
+
+      for(let i=0; i<40; i++){
+        createFloating();
       }
-    }, 40);
-  }
 
-  function endHold() {
-    if (holdInterval) {
-      clearInterval(holdInterval);
-      holdInterval = null;
-      if (progress < 10) {
-        progressLabel.textContent = 'Hold YES to fill the heart';
-        progressHint.style.display = 'block';
-      }
+    });
+
+    // Floating Hearts
+    function createFloating(){
+
+      const float = document.createElement("div");
+
+      float.classList.add("floating");
+
+      const items = ["❤️","✨","🧡","🌸"];
+
+      float.innerHTML = items[Math.floor(Math.random()*items.length)];
+
+      float.style.left = Math.random() * window.innerWidth + "px";
+
+      float.style.fontSize = (20 + Math.random()*30) + "px";
+
+      document.body.appendChild(float);
+
+      setTimeout(() => {
+        float.remove();
+      }, 6000);
+
     }
-  }
 
-  // NO — runs away on hover/touch
-  noBtn.addEventListener('mouseover', runAway);
-  noBtn.addEventListener('touchstart', runAway, { passive: true });
-  noBtn.addEventListener('click', () => {
-    noEscapeCount++;
-    if (noEscapeCount >= 8) showNo();
-  });
-
-  function runAway() {
-    noEscapeCount++;
-    const appRect = app.getBoundingClientRect();
-    const btnW = noBtn.offsetWidth;
-    const btnH = noBtn.offsetHeight;
-    const maxX = appRect.width - btnW - 20;
-    const maxY = appRect.height - btnH - 20;
-    const x = Math.max(10, Math.floor(Math.random() * maxX));
-    const y = Math.max(10, Math.floor(Math.random() * maxY));
-    noBtn.style.left = x + 'px';
-    noBtn.style.top = y + 'px';
-    if (noEscapeCount === 3) noBtn.textContent = 'Nope! 😂';
-    if (noEscapeCount === 5) noBtn.textContent = 'Stop! 😱';
-    if (noEscapeCount === 7) noBtn.textContent = 'Fine... 😤';
-    spawnHeart();
-  }
-
-  function spawnHeart() {
-    const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝'];
-    const h = document.createElement('div');
-    h.className = 'floating-heart';
-    h.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-    h.style.left = (Math.random() * 85 + 5) + '%';
-    h.style.bottom = '30px';
-    h.style.animationDuration = (2.5 + Math.random() * 1.5) + 's';
-    app.appendChild(h);
-    setTimeout(() => h.remove(), 4000);
-  }
-
-  function showYes() {
-    clearInterval(petalInterval);
-    mainScreen.classList.remove('active');
-    yesScreen.classList.add('active');
-    for (let i = 0; i < 30; i++) setTimeout(() => spawnHeart(), i * 80);
-    setTimeout(() => {
-      for (let i = 0; i < 20; i++) setTimeout(() => spawnHeart(), i * 60);
-    }, 600);
-    startPetals();
-  }
-
-  function showNo() {
-    clearInterval(petalInterval);
-    mainScreen.classList.remove('active');
-    noScreen.classList.add('active');
-  }
-
-  shareBtn.addEventListener('click', () => {
-    if (navigator.share) {
-      navigator.share({ title: '💍 Will You Be My Forever?', text: 'Someone special said YES! 💕', url: window.location.href });
-    } else {
-      const txt = shareBtn.textContent;
-      shareBtn.textContent = '✓ Link copied!';
-      setTimeout(() => shareBtn.textContent = txt, 2000);
-    }
-  });
-
-  function resetApp() {
-    progress = 0;
-    noEscapeCount = 0;
-    progressBar.style.width = '0%';
-    progressLabel.textContent = 'Hold YES to fill the heart';
-    progressHint.style.display = 'block';
-    noBtn.style.left = '';
-    noBtn.style.top = '';
-    noBtn.textContent = 'No 😅';
-    yesScreen.classList.remove('active');
-    noScreen.classList.remove('active');
-    mainScreen.classList.add('active');
-    clearInterval(petalInterval);
-    startPetals();
-  }
-</script>
+  </script>
 
 </body>
 </html>
